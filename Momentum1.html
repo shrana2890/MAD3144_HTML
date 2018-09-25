@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Momentum</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css" rel="stylesheet" type="text/css" />
@@ -20,7 +20,6 @@
        text-decoration:none;
        color:#ffffff;
      }
-
     /* ------ Background section---*/
     body{
     /*  background-image: url("images/pic1.jpg");*/
@@ -36,7 +35,6 @@
       position: relative;
       width: 100%;
     }
-
     img {
       pointer-events: none;
       position: absolute;
@@ -50,14 +48,57 @@
         margin: 0 auto;
         padding-top: 20px;
       }
+      .dropbtn {
+    text-decoration:none;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
 
+.dropbtn:hover, .dropbtn:focus {
+    color: #000000;
+    text-decoration:none;
+    background-color: transparent;
+}
+
+    .dropdown {
+    position: relative;
+    display: inline-block;
+    }
+
+.dropdown-content {
+    display: none;
+    position: fixed;
+    background-color: #000000;
+    color:#eeeeee;
+    min-width: 160px;
+max-width: 200px;
+    overflow: auto;
+  /*  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+    z-index: 1;
+    opacity: 0.4;
+}
+
+.dropdown-content a {
+    color:#eeeeee;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown a:hover {color: white;}
+
+.show {display: block;}
     /* ------ central section---*/
     #center-section{
        text-align:center;
        color:#ffffff;
        padding-top:80px;
     }
-
     /* ------ footer section---*/
     #footer-section{
         width: 95%;
@@ -72,12 +113,17 @@
        <div >
          <!-- link -->
         <div class="columns">
-         <div class="column">
-           <a id="link" href="#"> Link </a>
-         </div> <!--// link -->
+         <div class="column dropdown col-3">
+           <button  class="button is-text dropbtn"id="link" style="color:white;text-decoration:none;" onclick="myFunction()"> Link </button>
+           <div id="myDropdown" class="dropdown-content">
+             <a href="http://www.chrome.com">Google Chrome</a>
+             <a href="https://play.google.com/store/apps/top?utm_source=na_Med&utm_medium=hasem&utm_content=Aug0917&utm_campaign=Evergreen&pcampaignid=MKT-DR-na-ca-1001279-Med-hasem-py-Evergreen-Aug0917-Text_Search_BKWS%7cEXA%7cONSEM_kwid_43700018397282448&gclid=Cj0KCQjwuafdBRDmARIsAPpBmVVwflHVmxNldQwUyEfofsU_brOuXjSmpvE-jAKjAhJ5YjsWTPMg7QoaAjXjEALw_wcB&gclsrc=aw.ds&dclid=COzhp5zg1t0CFYnDwAodZIoClg">My Apps</a>
+          </div>
+       </div>
+       <!--// link -->
 
          <!-- weather -->
-         <div class="column has-text-right" style="display:inline;">
+         <div class="column has-text-right is-offset-9" style="display:inline;">
            <a href="#">
           <i class="fas fa-cloud"  id="cloud" ></i>
           <i class="fas fa-snowflake" id="snow" style="display:none;"></i>
@@ -118,7 +164,17 @@
         <p id="quote" style="font-size:20px;color:#ffffff;text-align:center;"></p>
       </div>
       <div class="column has-text-right is-3 content">
-       <a href="#">TODO</a>
+        <button  class="button is-text dropbtn"id="link" style="color:white;text-decoration:none;" onclick="myToDo()"> Todo </button>
+        <div id="myToDo" class="dropdown-content">
+          <ul id="myUL">
+    <li>Hit the gym</li>
+    <li class="checked">Pay bills</li>
+    <li>Meet George</li>
+    <li>Buy eggs</li>
+    <li>Read a book</li>
+    <li>Organize office</li>
+  </ul>
+</div>
       </div>
     </div>
     </section>

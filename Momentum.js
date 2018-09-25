@@ -67,20 +67,25 @@ var r = randomQ();
 $("document").ready(function(){
   $("p#quote").append(r);
 })
-localStorage.setItem("nameAvailability", null)
-var nameAvailability = localStorage.getItem("nameAvailability")
+//localStorage.setItem("nameAvailability", null)
+//var nameAvailability = localStorage.getItem("nameAvailability")
 function search(){
 //when name is entered
 //var nam = $("input#nametext").val();
 var nameAvailability = localStorage.getItem("nameAvailability")
 if(event.keyCode == 13 && nameAvailability != "true") {
+var nam = $("input#nametext").val();
+localStorage.setItem("name", nam)
 $("document").ready(function(){
 $("div#replace").hide();
 });
-var nam = $("input#nametext").val();
-localStorage.setItem("name", nam)
+
 var storename=localStorage.getItem("name")
 localStorage.setItem("nameAvailability",true)
+
+}
+if(event.keyCode == 13 || nameAvailability == "true" ){
+$("div#replace").hide();
 replace();
 }
 }
@@ -129,23 +134,23 @@ function weather() {
           // $('#minutely').append(data.hourly.icon);
           // $('#minutely').append(data.daily.icon);
           // $('#minutely').append(data.daily.summary);
-          checkIcon(data.minutely.icon)
+        //  checkIcon(data.minutely.icon)
         });
       }
-      function checkIcon(icons){
-        $("img#cloud").hide();
-        $("img#rain").show();
-          //icons =  string(icons);
-        if(icons == "clear-day"){
-          alert(icons)
-          $("img#cloud").hide();
-          $("img#rain").show();
+      // function checkIcon(icons){
+      //   $("img#cloud").hide();
+      //   $("img#rain").show();
+      //     //icons =  string(icons);
+      //   if(icons == "clear-day"){
+      //     alert(icons)
+      //     $("img#cloud").hide();
+      //     $("img#rain").show();
+      //
+      //     // var img = document.getElementById("image#sun").src;
+      //     // document.getElementById("span#wind").innerHTML = '<img src="../Image/sun.svg"/>';
+      //   }
+      // }
 
-          // var img = document.getElementById("image#sun").src;
-          // document.getElementById("span#wind").innerHTML = '<img src="../Image/sun.svg"/>';
-        }
-      }
- 
       function error() {
         location.innerHTML = "Unable to retrieve your location";
       }
@@ -160,3 +165,78 @@ function weather() {
                     $("p#city").append(location.city);
                 }
             });
+            /* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+function myToDo() {
+    document.getElementById("myToDo").classList.toggle("show");
+}
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+var myNodelist = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < myNodelist.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  myNodelist[i].appendChild(span);
+}
+
+// Click on a close button to hide the current list item
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+// Add a "checked" symbol when clicking on a list item
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
+
+// Create a new list item when clicking on the "Add" button
+function newElement() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("myInput").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("You must write something!");
+  } else {
+    document.getElementById("myUL").appendChild(li);
+  }
+  document.getElementById("myInput").value = "";
+
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
