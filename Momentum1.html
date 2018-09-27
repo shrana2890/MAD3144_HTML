@@ -55,31 +55,27 @@
     border: none;
     cursor: pointer;
 }
-
 .dropbtn:hover, .dropbtn:focus {
     color: #000000;
     text-decoration:none;
     background-color: transparent;
 }
-
     .dropdown {
     position: relative;
     display: inline-block;
     }
-
 .dropdown-content {
     display: none;
     position: fixed;
     background-color: #000000;
     color:#eeeeee;
     min-width: 160px;
-max-width: 200px;
+    max-width: 200px;
     overflow: auto;
   /*  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
     z-index: 1;
-    opacity: 0.4;
+    opacity: 0.7;
 }
-
 .dropdown-content a {
     color:#eeeeee;
     padding: 12px 16px;
@@ -89,9 +85,7 @@ max-width: 200px;
 .dropdown:hover .dropdown-content {
     display: block;
 }
-
 .dropdown a:hover {color: white;}
-
 .show {display: block;}
     /* ------ central section---*/
     #center-section{
@@ -104,6 +98,93 @@ max-width: 200px;
         width: 95%;
         margin: 0 auto;
       }
+      ul li {
+        cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #000;
+  font-size: 16px;
+  transition: 0.2s;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+ul li:hover {
+    background: red;
+}
+ul li.checked {
+    /* color: #ffffff; */
+    text-decoration: line-through;
+}
+ul li.checked::before {
+    content: '';
+    position: absolute;
+    border-color: #000;
+    border-style: solid;
+    border-width: 0 3px 3px 0;
+    top: 10px;
+    left: 16px;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+}
+.close {
+    position:absolute;
+    right: 0;
+    top: 0;
+    padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+    background-color: red;
+    color: white;
+}
+
+/* Style the header */
+.header {
+    background-color: #f44336;
+    padding: 30px 40px;
+    color: white;
+    text-align: center;
+}
+
+/* Clear floats after the header */
+.header:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Style the input */
+input {
+    margin:  0 auto;
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 10px;
+    float: left;
+    font-size: 16px;
+}
+
+/* Style the "Add" button */
+.addBtn {
+    padding: 10px;
+    width: 25%;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 0;
+}
+
+.addBtn:hover {
+    background-color: #bbb;
+}
     </style>
   </head>
   <body onload="startTime()">
@@ -142,39 +223,43 @@ max-width: 200px;
    <section id="center-section">
      <div>
       <div id="txt" style="font-size:150px;"></div>
+        <div id="name"style="font-size:50px;"></div>
 
-      <div id="replace" style="font-size:40px;"> What is your name<br>
-      <input type="text" style="background-color:transparent; color:white;border:0px solid transparent; width: 300px;font-size: 35px;border-bottom:3px solid white;" id="nametext" onkeydown="search()"><br>
-      <a  id="enter"class="button is-outlined is-white" style="margin-top:10px;">Enter</a>
-    </div>
-      <div id="name"style="font-size:40px;"></div>
+      <div id="replace" style="font-size:40px;"></div><br>
+
+      <input type="text" style="background-color:transparent;float: none;color:white;border:0px solid transparent; width: 300px;font-size: 35px;border-bottom:3px solid white;" id="nametext" onkeydown="search()"><br>
+        <input type="text" style="display: none;background-color:transparent;float: none;color:white;border:0px solid transparent; width: 300px;font-size: 35px;border-bottom:3px solid white;" id="focustext" onkeydown="task()"><br>
+
+        <div id="task" style="font-size:30px;"></div><br>
+
+
 
      </div>
    </section>
   <!-- footer section-->
-    <section id="footer-section">
-      <div class="columns" style="margin-top:60px;">
+    <section id="footer-section" style="margin-bottom:40px;">
+      <div class="columns" style="margin-top:20%; margin-bottom:40px;">
         <div class="column is-3 content">
         <i class="fas fa-assistive-listening-systems" style="display:inline;"></i>
         <a href="#">
         <p>Marble,USA</p>
         </a>
       </div>
-      <div class="column has-text-center is-offset-1 content">
+      <div class="column has-text-center  content">
         <p id="quote" style="font-size:20px;color:#ffffff;text-align:center;"></p>
       </div>
       <div class="column has-text-right is-3 content">
         <button  class="button is-text dropbtn"id="link" style="color:white;text-decoration:none;" onclick="myToDo()"> Todo </button>
-        <div id="myToDo" class="dropdown-content">
-          <ul id="myUL">
-    <li>Hit the gym</li>
-    <li class="checked">Pay bills</li>
-    <li>Meet George</li>
-    <li>Buy eggs</li>
-    <li>Read a book</li>
-    <li>Organize office</li>
-  </ul>
-</div>
+        <div id="myToDo" class="dropdown-content" style="max-width:350px;min-width:250px;bottom:15%;right:10%;position:fixed;">
+          <div id="myDIV" class="header">
+           <h2>Add Task in ToDo List</h2>
+           <input type="text" id="myInput" placeholder="Title...">
+           <span onclick="newElement()" class="addBtn">Add</span>
+         </div>
+          <ul id="myUL" style="text-align:center;">
+           <li></li>
+         </ul>
+        </div>
       </div>
     </div>
     </section>

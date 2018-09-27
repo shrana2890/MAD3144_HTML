@@ -65,7 +65,8 @@ return(quote[imageNumber])
 document.write("<img src='" + imageloc + randomImage()+ "'>");
 var r = randomQ();
 $("document").ready(function(){
-  $("p#quote").append(r);
+  $("p#quote").html(r);
+  $("div#replace").html("Hi, What is your name");
 })
 //localStorage.setItem("nameAvailability", null)
 //var nameAvailability = localStorage.getItem("nameAvailability")
@@ -77,34 +78,57 @@ if(event.keyCode == 13 && nameAvailability != "true") {
 var nam = $("input#nametext").val();
 localStorage.setItem("name", nam)
 $("document").ready(function(){
-$("div#replace").hide();
+$("input#nametext").hide();
+$("input#focustext").show();
 });
 
 var storename=localStorage.getItem("name")
 localStorage.setItem("nameAvailability",true)
 
 }
-if(event.keyCode == 13 || nameAvailability == "true" ){
-$("div#replace").hide();
+var check = localStorage.getItem("check")
+if(event.keyCode == 13 && nameAvailability == "true" && check != "true"){
+$("div#replace").html("what is your main focus for today");
+$("document").ready(function(){
+var task = $("input#focustext").val();
+localStorage.setItem("check",true)
+
+});
 replace();
+}
+if(check == "true"){
+
+  replace();
+  task();
+}
+}
+function task(){
+  var check = localStorage.getItem("check")
+  if(event.keyCode == 13 || check == "true") {
+  $("div#replace").html("what is your main focus for today");
+  var task = $("input#focustext").val();
+  localStorage.setItem("task",task)
+  var storetask=localStorage.getItem("task")
+  $("div#task").html(storetask);
+  replace();
 }
 }
 function replace(){
 var storename=localStorage.getItem("name")
-if(h>=4 && h<=12){
-  $("div#name").append("Good Morning, " + storename)
+if(h>=4 && h<=11){
+  $("div#name").html("Good Morning, " + storename)
 }
-else if(h>12 && h<=16){
-  $("div#name").append("Good Afternoon, "+ storename)
+else if(h>11 && h<=16){
+  $("div#name").html("Good Afternoon, "+ storename)
 }
 else if(h>16 && h<=19){
-  $("div#name").append("Good Evening, "+ storename)
+  $("div#name").html("Good Evening, "+ storename)
 }
 else if(h>19 && h<=23){
-    $("div#name").append("Good Night, "+ storename)
+    $("div#name").html("Good Night, "+ storename)
   }
   else{
-    $("div#name").append("Good Night, "+ storename)
+    $("div#name").html("Good Night, "+ storename)
   }
     alert("should get the innerHTML or text value here");
     //  $("div#replace").fadeout();
@@ -150,7 +174,6 @@ function weather() {
       //     // document.getElementById("span#wind").innerHTML = '<img src="../Image/sun.svg"/>';
       //   }
       // }
-
       function error() {
         location.innerHTML = "Unable to retrieve your location";
       }
@@ -176,7 +199,8 @@ function myToDo() {
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
+  //  var dropdowns = document.getElementsByClassName("dropdown-content");
+     var dropdowns = document.getElementsByClassName("dropbtn");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
       var openDropdown = dropdowns[i];
@@ -207,9 +231,12 @@ for (i = 0; i < close.length; i++) {
 }
 
 // Add a "checked" symbol when clicking on a list item
+//var list = document.querySelector('ul');
+//list.addEventListener('onclick', function(ev) {
 var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
+list.onclick(function(ev){
   if (ev.target.tagName === 'LI') {
+    alert(check)
     ev.target.classList.toggle('checked');
   }
 }, false);
