@@ -1,0 +1,275 @@
+<!DOCTYPE html
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>Momentum</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script type="text/javascript" src="Momentum.js">
+</script>
+
+    <style type="text/css">
+    /*---- all--*/
+    a {
+       color:#eeeeee;
+       text-decoration:none;
+     }
+     a:hover {
+       text-decoration:none;
+       color:#ffffff;
+     }
+     #wind{
+       display:none;
+     }
+     span#temp:hover +span#wind {
+       display: inline-block;
+       position: fixed;
+       background-color: #000000;
+       color:#eeeeee;
+       min-width: 100px;
+       max-width: 250px;
+       overflow: auto;
+       z-index: -1;
+       opacity: 0.7;
+
+     }
+    /* ------ Background section---*/
+    body{
+    /*  background-image: url("images/pic1.jpg");*/
+    /*  background-image: url('z');*/
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+    div {
+      display: inline-block;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+    }
+    img {
+      pointer-events: none;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+     /* ------ head section---*/
+    #head-section{
+        width: 95%;
+        margin: 0 auto;
+        padding-top: 1%;
+      }
+      .dropbtn {
+    text-decoration:none;
+    color: white;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+}
+.dropbtn:hover, .dropbtn:focus {
+    color: #000000;
+    text-decoration:none;
+    background-color: transparent;
+}
+    .dropdown {
+    position: relative;
+    display: inline-block;
+    }
+.dropdown-content {
+    display: none;
+    position: fixed;
+    background-color: #000000;
+    color:#eeeeee;
+    min-width: 160px;
+    max-width: 200px;
+    overflow: auto;
+  /*  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+    z-index: 1;
+    opacity: 0.7;
+}
+.dropdown-content a {
+    color:#eeeeee;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown a:hover {color: white;}
+.show {display: block;}
+    /* ------ central section---*/
+    #center-section{
+       text-align:center;
+       color:#ffffff;
+       padding-top:4%;
+    }
+    /* ------ footer section---*/
+    #footer-section{
+        width: 95%;
+        margin: 0 auto;
+         padding-top:1%;
+      }
+      ul li {
+        cursor: pointer;
+        position: relative;
+        padding: 12px 8px 12px 40px;
+        text-align: justify;
+        list-style-type: none;
+        background: #000;
+        font-size: 16px;
+        transition: 0.2s;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+ul li:hover {
+    background: red;
+}
+/* ul li.checked {
+    color: #ffffff;
+    text-decoration: line-through;
+}*/
+/*ul li.checked::before {
+    content: '';
+    position: absolute;
+    border-color: #000;
+    border-style: solid;
+    border-width: 0 3px 3px 0;
+    top: 10px;
+    left: 16px;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+} */
+.close {
+    position:absolute;
+    right: 0;
+    top: 0;
+    padding: 12px 16px 12px 16px;
+}
+.close:hover {
+    background-color: red;
+    color: white;
+}
+/* Style the header */
+.header {
+    background-color: #f44336;
+    padding: 30px 40px;
+    color: white;
+    text-align: center;
+}
+/* Clear floats after the header */
+.header:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+/* Style the input */
+input {
+    margin:  0 auto;
+    border: none;
+    border-radius: 0;
+    width: 75%;
+    padding: 10px;
+    float: left;
+    font-size: 16px;
+}
+/* Style the "Add" button */
+.addBtn {
+    padding: 10px;
+    width: 25%;
+    background: #d9d9d9;
+    color: #555;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+
+}
+.addBtn:hover {
+    background-color: #bbb;
+}
+    </style>
+  </head>
+  <body onload="startTime()">
+
+    <!--   - head section--->
+    <section id="head-section">
+       <div >
+         <!-- link -->
+        <div class="columns">
+         <div class="column dropdown col-3">
+           <button  class="button is-text dropbtn"id="link" style="color:white;text-decoration:none;" onclick="myFunction()"> Link </button>
+           <div id="myDropdown" class="dropdown-content">
+             <a href="http://www.chrome.com">Google Chrome</a>
+             <a href="https://play.google.com/store/apps/top?utm_source=na_Med&utm_medium=hasem&utm_content=Aug0917&utm_campaign=Evergreen&pcampaignid=MKT-DR-na-ca-1001279-Med-hasem-py-Evergreen-Aug0917-Text_Search_BKWS%7cEXA%7cONSEM_kwid_43700018397282448&gclid=Cj0KCQjwuafdBRDmARIsAPpBmVVwflHVmxNldQwUyEfofsU_brOuXjSmpvE-jAKjAhJ5YjsWTPMg7QoaAjXjEALw_wcB&gclsrc=aw.ds&dclid=COzhp5zg1t0CFYnDwAodZIoClg">My Apps</a>
+          </div>
+       </div>
+       <!--// link -->
+
+         <!-- weather -->
+         <div class="column has-text-right is-offset-9" style="display:inline;">
+           <a href="#">
+          <i class="fas fa-cloud"  id="cloud" ></i>
+          <i class="fas fa-snowflake" id="snow" style="display:none;"></i>
+          <i class="fas fa-sun" id="sun"style="display:none;"></i>
+          <i class="fas fa-mixcloud" id="partial"style="display:none;"></i>
+          <i class="fas fa-umbrella"id="rain"style="display:none;"></i>
+          <span id="temp"></span>
+           <span id="wind"></span>
+           <p id="city" style="color:white;"></p>
+           </a>
+         </div>
+         </div> <!--//weather -->
+   </section>
+       <!--   - - - - - - //head section - - -->
+  <!-- central section-->
+   <section id="center-section">
+     <div>
+      <div id="txt" style="font-size:140px;"></div>
+        <div id="name"style="font-size:50px;"></div>
+
+      <div id="replace" style="font-size:40px;"></div><br>
+      <div id="task" style="font-size:30px;"></div><br>
+      <input type="text" style="background-color:transparent;float: none;color:white;border:0px solid transparent; width: 300px;font-size: 30px;border-bottom:3px solid white;" id="nametext" onkeydown="search()"><br>
+      <input type="text" style="display: none;background-color:transparent;float: none;color:white;border:0px solid transparent; width: 300px;font-size: 30px;border-bottom:3px solid white;" id="focustext" onkeydown="task()"><br>
+
+     </div>
+   </section>
+  <!-- footer section-->
+    <section id="footer-section">
+      <div class="columns" style="margin-top:-1%; margin-bottom:-15%;">
+        <div class="column is-3 content">
+        <i class="fas fa-assistive-listening-systems" style="display:inline;"></i>
+        <a href="#">
+        <p>Marble,USA</p>
+        </a>
+      </div>
+      <div class="column has-text-center  content">
+        <p id="quote" style="font-size:20px;color:#ffffff;text-align:center;"></p>
+      </div>
+      <div class="column has-text-right is-3 content">
+        <button  class="button is-text dropbtn"id="link" style="color:white;text-decoration:none;" onclick="myToDo()"> Todo </button>
+        <div id="myToDo" class="dropdown-content" style="max-width:350px;min-width:250px;bottom:15%;right:10%;position:fixed;">
+          <div id="myDIV" class="header">
+           <h2>Add Task in ToDo List</h2>
+           <input type="text" id="myInput" placeholder="Title...">
+           <span onclick="newElement()" class="addBtn">Add</span>
+         </div>
+          <ul id="myUL" style="text-align:center;">
+           <li></li>
+         </ul>
+        </div>
+      </div>
+    </div>
+    </section>
+
+  </body>
+</html>
