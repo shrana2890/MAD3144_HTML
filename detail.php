@@ -1,10 +1,17 @@
 <?php
+include("header.php");
 
 //  if ($_SERVER["REQUEST_METHOD"] == "GET"){
       // 1. Get location id from the URL
+
       $cardID = $_GET["pos"];
-       $p =0;
+      session_start();
+      $currency = $_SESSION["currency"];
+
+      $p =0;
       $q = 0;
+      $price = 1.0;
+      $sign = "$";
 
       // 2. DB: Connect to database
       $dbhost = "localhost";		// address of your database
@@ -20,7 +27,18 @@
       $resultsDetail = mysqli_query($conn, $sqlDetail);
       $x = mysqli_fetch_assoc($results);    //you don't need a while loop because you only get 1 thing back
       $xDetail = mysqli_fetch_assoc($resultsDetail);
-      print_r($x);
+      $y = mysqli_num_rows($results);
+      if ($currency == "1"){
+        $price =50;
+        $sign = "RUPEES";
+      } elseif ($currency == "2") {
+        $price = 1.2;
+        $sign = "CAD";
+      } else{
+        $price= 1;
+        $sign ="$";
+      }
+      //print_r($x);
 ?>
 
 <!DOCTYPE html>
@@ -106,19 +124,20 @@
 }
 
 @-webkit-keyframes fade {
-  from {opacity: .4} 
+  from {opacity: .4}
   to {opacity: 1}
 }
 
 @keyframes fade {
-  from {opacity: .4} 
+  from {opacity: .4}
   to {opacity: 1}
 }
- #star{
-      color: orange;
+    #descript{
+      color: grey;
+      font-size: 15px;
      }
-     #star:hover{
-      color:grey;
+     #name{
+      color:orange;
      }
      </style>
   </head>
@@ -178,66 +197,54 @@
             </figure>
           </div>
           <div class="card-content">
-            <div class="content" style="font-family: FontAwesome;">
-              <?php 
-echo $xDetail["name"];
+            <div class="content" style="font-style: 'Varela Round', sans-serif;font-size:17px;color:#533393">
+      <?php
+echo "<div id='name'>".$xDetail["name"];
+echo "</div>";
+echo $xDetail["type"]. "  in".$xDetail["location"];
 echo "<br>";
-echo $xDetail["type"];
+echo "<div id='descript'>Description: ".$xDetail["description"];
+echo "</div>";
+echo $sign." ".$x["price"]*$price." per Night";
 echo "<br>";
-echo $xDetail["location"];
+echo "Ownner Name: ".$xDetail["owner"];
 echo "<br>";
-echo $xDetail["price"]. "  Per Bed";
+echo "No. of bedrooms: ".$xDetail["bedrooms"];
 echo "<br>";
-echo $xDetail["reviews"];
+echo "Bathroom: ".$xDetail["bath"];
 echo "<br>";
-echo $xDetail["superhost"];
+echo "Free Parking: ".$xDetail["free_parking"];
 echo "<br>";
-
-echo $xDetail["owner"];
+echo "Wifi Availability: ".$xDetail["wifi"];
 echo "<br>";
-echo $xDetail["guests"];
+echo "Kitchen Availability: ".$xDetail["kitchen"];
 echo "<br>";
-echo $xDetail["bedrooms"];
-echo "<br>";
-echo $xDetail["bath"];
-echo "<br>";
-echo $xDetail["description"];
-echo "<br>";
-echo $xDetail["free_parking"];
-echo "<br>";
-echo $xDetail["laptop_friendly_environment"];
-echo "<br>";
-echo $xDetail["laundry"];
-echo "<br>";
-echo $xDetail["wifi"];
-echo "<br>";
-echo $xDetail["kitchen"];
-echo "<br>";
-echo $xDetail["cable_tv"];
+echo "Cable Tv Availability: ".$xDetail["cable_tv"];
 echo "<br>";
 
-              echo "<a href='#' id='star'>";
-                    if( $q == 0){
-                      for($a=1; $a<=5;$a++){
-                        if($a <= $xDetail["rating"]){
+    echo "<a href='#' id='star'>";
+          if( $q == 0){
+            for($a=1; $a<=5;$a++){
+              if($a <= $xDetail["rating"]){
 
-                        echo '<i class="fas fa-star " ></i>';
+              echo '<i class="fas fa-star " ></i>';
 
-                     }else if(floor($xDetail["rating"]) != round($xDetail["rating"])){
-                      echo '<i class="fas fa-star-half "></i>';
-                     }
-                     else{
-                       echo '<i class="far fa-star "></i>';
-                     }
-              }
-              $q = 1;
+           }else if(floor($xDetail["rating"]) != round($xDetail["rating"])){
+            echo '<i class="fas fa-star-half "></i>';
            }
-                ?>
+           else{
+             echo '<i class="far fa-star "></i>';
+           }
+    }
+    $q = 1;
+ }
 
-              </a>
-<form action="#"?pos= value method="GET">
-  <button type="submit">Confirm</button>
-  <div class="select">
+   echo "</a>";
+    echo " ".$xDetail["reviews"]."  Reviews";
+     ?>
+<form action="creditcard.php"?pos= value method="GET">
+
+  <div class="select is-medium is-centered">
   <select name="beds">
     <option value="0">Number Of Beds</option>
     <option value="1">1</option>
@@ -247,15 +254,17 @@ echo "<br>";
     <option value="5">5</option>
   </select>
 </div>
+ <button class="button is-medium is-outlined" type="submit" id="bedselect"style="float: right;">Confirm</button>
 
 </form>
+
 
             </div>
 
           </div>
         </div>
       </div>
-     
+
   </a>
      <?php
            $q=0;
@@ -283,12 +292,12 @@ function currentSlide(n) {
 function showSlides(n) {
   var i;
   var slides = document.getElementsByClassName("mySlides");
-  if (n > slides.length) {slideIndex = 1} 
+  if (n > slides.length) {slideIndex = 1}
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none"; 
+      slides[i].style.display = "none";
   }
-  slides[slideIndex-1].style.display = "block"; 
+  slides[slideIndex-1].style.display = "block";
 }
 </script>
 </body>
