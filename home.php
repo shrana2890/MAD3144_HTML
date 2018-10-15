@@ -1,31 +1,38 @@
 <?php
- $u = $_GET["city"];
-  if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    
+include("header.php");
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+     $u = $_POST["city"];
+
+     echo $currency;
       // DB: connect to database
       $dbhost = "localhost";
       $dbuser = "root";
       $dbpassword = "";
-      $dbname = "room";
+      $dbname = "airbnb";
 
       $conn = mysqli_connect($dbhost,$dbuser,$dbpassword,$dbname);
 
       // SQL QUERY:
-      $query = 'SELECT * FROM cities WHERE Owner = "Leslie"';
+      $query = 'SELECT * FROM cities WHERE  location="'
+              . $u
 
-      echo "Query you are sending to db: " . $query  . "<br>";
+              . '"';
 
       $results = mysqli_query($conn, $query);
       $y = mysqli_num_rows($results);
-      echo "Number of rows returned: " . $y . "<br>";
 
       if ($y == 0) {
-          echo "<span style='color:red'> Error - wrong city </span><br>";
+          echo "<script type='text/javascript'>
+           alert('please enter valid city');
+           </script>";
       }
       else {
           // 5. set a session variable to show the person is logged in
           session_start();
-          $_SESSION["userLoggedIn"] = $y;
+          $_SESSION["locationResult"] = $y;
+          $_SESSION["city"] = $u;
+
+
 
           // 6. redirect them to page 2
           header("Location: cities.php");
@@ -49,6 +56,7 @@
      }
        #center {
       border: 1px solid transparent;
+
       position:fixed;
       text-align:center;
       width: 100%;
@@ -59,41 +67,46 @@
        width:500px;
        text-indent: 20%;
        height:95px;
-       background:url(search.png); 
+       background:url(search.png);
        background-repeat:no-repeat;
        font-size:40px;
-       color:white;
-       border: 2px solid white;
+       color:grey;
+       border: 2px solid grey;
 
      }
-    
+
      #enter{
       width:90%;
 
+
      }
      #enterbutton{
+      margin-top: 5px;
       height:92px;
       padding-top: 0px;
       border-top: 0px solid transparent;
-      width: 110px;
+      width: 37%;
       border-radius: 10%;
-      border-bottom: 2px solid white;
+      border-bottom: 3px solid grey;
      }
-     #image{
-      width: 40%;
-      height: 50%;
-     }
+     /*#image{
+      width: 100%;
+      height: 95px;
+     }*/
      </style>
   </head>
   <body>
-     <!--  <img id="pic" src="pic5.jpg"> -->
+      <img id="pic" src="p1.jpg">
       <div id="center">
-        <div id="enter" style="text-align:center; margin: 30% auto;">
-        <form action="home.php" method="GET">
-        <input type="text" placeholder= "Enter City Name" name="city" id="search">
-        <button type="submit" id="enterbutton" ><img id="image" src="search.png"></button>
+        <div id="enter" style="text-align:center; margin: 17% auto;">
+        <form action="home.php" method="POST">
+        <input type="text" placeholder= "Enter City Name" name="city" id="search" required><br>
+        <button type="submit" id="enterbutton" style="font-size: 35px; color: grey;">Search</button>
       </form>
       </div>
     </div>
+    <?php
+    include("footer.php");
+    ?>
   </body>
 </html>
